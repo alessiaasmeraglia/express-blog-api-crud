@@ -1,5 +1,5 @@
 {
-  "name": "express-blog-routing",
+  "name": "express-blog-api-crud",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",

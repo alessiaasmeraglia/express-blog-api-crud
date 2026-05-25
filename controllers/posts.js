@@ -1,8 +1,9 @@
 import posts from "../data/posts.js";
 
 function index(req, res) {
-    res.json({
-        message: "Lista dei post",
+    res.status(200).json({
+        count: posts.length,
+        items: posts,
     });
 }
 

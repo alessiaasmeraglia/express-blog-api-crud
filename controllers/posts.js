@@ -72,5 +72,33 @@ function update(req, res) {
     });
 }
 
+function destroy(req, res) {
+    const id = Number(req.params.id);
+
+    if (isNaN(id) || id <= 0) {
+        res.status(400).json({
+            error: "L'id deve essere un numero positivo",
+        });
+
+        return;
+    }
+
+    const postIndex = posts.findIndex((post) => post.id === id);
+
+    if (postIndex === -1) {
+        res.status(404).json({
+            error: `Post con id ${id} non trovato`,
+        });
+
+        return;
+    }
+
+    posts.splice(postIndex, 1);
+
+    console.log("Lista aggiornata dei post:", posts);
+
+    res.sendStatus(204);
+}
+
 
 export { index, show, create, update, destroy };

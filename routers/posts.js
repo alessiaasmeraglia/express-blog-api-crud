@@ -8,6 +8,8 @@ import {
     destroy,
 } from "../controllers/posts.js";
 
+import checkPostId from "../middlewares/checkPostId.js";
+
 const router = express.Router();
 
 router.get("/", index);

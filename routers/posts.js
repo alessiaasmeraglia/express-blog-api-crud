@@ -13,9 +13,9 @@ import checkPostId from "../middlewares/checkPostId.js";
 const router = express.Router();
 
 router.get("/", index);
-router.get("/:id", show);
+router.get("/:id", checkPostId, show);
 router.post("/", create);
-router.put("/:id", update);
-router.delete("/:id", destroy);
+router.put("/:id", checkPostId, update);
+router.delete("/:id", checkPostId, destroy);
 
 export default router;

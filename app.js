@@ -20,6 +20,11 @@ app.get("/", (req, res) => {
 
 app.use("/posts", postsRouter);
 
+app.get("/test-error", (req, res, next) => {
+    const error = new Error("Errore di test");
+    next(error);
+});
+
 app.use(notFound);
 app.use(errorsHandler);
 

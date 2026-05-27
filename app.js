@@ -3,6 +3,9 @@ import "dotenv/config";
 
 import postsRouter from "./routers/posts.js";
 
+import notFound from "./middlewares/notFound.js";
+import errorsHandler from "./middlewares/errorsHandler.js";
+
 const app = express();
 
 const PORT = process.env.SERVER_PORT;
@@ -16,6 +19,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/posts", postsRouter);
+
+app.use(notFound);
+app.use(errorsHandler);
 
 app.listen(PORT, (error) => {
     if (error) {

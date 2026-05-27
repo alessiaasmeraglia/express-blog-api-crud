@@ -71,37 +71,14 @@ function index(req, res) {
 }
 
 function show(req, res) {
-    const id = Number(req.params.id);
-
-    if (isNaN(id) || id <= 0) {
-        res.status(400).json({
-            error: "L'id deve esesere un numero positivo",
-            item: null,
-        });
-
-        return;
-    }
-
-    const post = posts.find((post) => post.id === id);
-
-    if (!post) {
-        res.status(404).json({
-            error: `Post con id ${id} non trovato`,
-            item: null,
-        });
-
-        return;
-    }
 
     res.status(200).json({
-        item: post,
+        item: req.post,
     });
 }
 
 function create(req, res) {
     const newPostData = req.body;
-
-    console.log("Dati ricevuti:", newPostData);
 
     const errors = validatePostData(newPostData);
 
@@ -129,8 +106,6 @@ function create(req, res) {
 
     posts.push(newPost);
 
-    console.log("Lista aggiornata dei post:", posts);
-
     res.status(201).json({
         message: "Stai provando a creare dei dati",
         dati: newPostData,
@@ -138,30 +113,12 @@ function create(req, res) {
 }
 
 function update(req, res) {
-    const id = Number(req.params.id);
-
-    if (isNaN(id) || id <= 0) {
-        res.status(400).json({
-            error: "L'id deve essere un numero positivo",
-        });
-
-        return;
-    }
-
-    const post = posts.find((post) => post.id === id);
-
-    if (!post) {
-        res.status(404).json({
-            error: `Post con id ${id} non trovato`,
-        });
-
-        return;
-    }
+    const post = req.post;
 
 
     const updatedPostData = req.body;
 
-    console.log("Dati ricevuti per la modifica:", updatedPostData);
+    
 
     const errors = validatePostData(updatedPostData);
 

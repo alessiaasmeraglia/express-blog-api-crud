@@ -158,6 +158,32 @@ function update(req, res) {
         return;
     }
 
+
+    const updatedPostData = req.body;
+
+    console.log("Dati ricevuti per la modifica:", updatedPostData);
+
+    const errors = validatePostData(updatedPostData);
+
+    if (errors.length > 0) {
+        res.status(400).json({
+        error: "Dati non validi",
+        messages: errors,
+        });
+
+        return;
+    }
+
+    post.title = updatedPostData.title;
+    post.content = updatedPostData.content;
+    post.image = updatedPostData.image;
+    post.tags = updatedPostData.tags;
+    post.slug = updatedPostData.slug;
+    post.published = updatedPostData.published;
+    post.prep_time = updatedPostData.prep_time;
+
+    console.log("Post modificato:", post);
+
     res.status(200).json({
         message: `Modifica del post ${id}`,
     });

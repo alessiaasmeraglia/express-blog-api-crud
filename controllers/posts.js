@@ -36,9 +36,37 @@ function validatePostData(data) {
 }
 
 function index(req, res) {
+    let filteredPosts = posts;
+
+    const { tag, title, published } = req.query;
+
+    if (tag) {
+        filteredPosts = filteredPosts.filter((post) =>
+            post.tags.some((t) => t.toLowerCase() === tag.toLowerCase())
+        );
+    }
+
+    if (title) {
+        filteredPosts = filteredPosts.filter((post) =>
+            post.title.toLowerCase().includes(title.toLowerCase())
+        );
+    }
+
+    if (published) {
+        if (published !== "true" && published !== "false") {
+            res.status(400).json({
+                error: "Il filtro published deve essere true oppure false",
+            });
+            return;
+        }
+        const publishedValue = published === "true";
+        filteredPosts = filteredPosts.filter(
+            (post) => post.published === publishedValue
+        );
+    }
     res.status(200).json({
-        count: posts.length,
-        items: posts,
+        count: filteredPosts.length,
+        items: filteredPosts,
     });
 }
 

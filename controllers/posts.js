@@ -1,5 +1,40 @@
 import posts from "../data/posts.js";
 
+
+function validatePostData(data) {
+    const errors = [];
+
+    if (!data.title || typeof data.title !== "string") {
+        errors.push("Il titolo è obbligatorio e deve essere una stringa");
+    }
+
+    if (!data.content || typeof data.content !== "string") {
+        errors.push("Il contenuto è obbligatorio e deve essere una stringa");
+    }
+
+    if (!data.image || typeof data.image !== "string") {
+        errors.push("L'immagine è obbligatoria e deve essere una stringa");
+    }
+
+    if (!Array.isArray(data.tags)) {
+        errors.push("I tags sono obbligatori e devono essere un array");
+    }
+
+    if (!data.slug || typeof data.slug !== "string") {
+        errors.push("Lo slug è obbligatorio e deve essere una stringa");
+    }
+
+    if (typeof data.published !== "boolean") {
+        errors.push("Published è obbligatorio e deve essere true oppure false");
+    }
+
+    if (typeof data.prep_time !== "number" || data.prep_time <= 0) {
+        errors.push("Prep_time è obbligatorio e deve essere un numero positivo");
+    }
+
+    return errors;
+}
+
 function index(req, res) {
     res.status(200).json({
         count: posts.length,

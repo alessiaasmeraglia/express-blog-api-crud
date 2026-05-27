@@ -103,6 +103,34 @@ function create(req, res) {
 
     console.log("Dati ricevuti:", newPostData);
 
+    const errors = validatePostData(newPostData);
+
+    if (errors.length > 0) {
+        res.status(400).json({
+            error: "Dati non validi",
+            details: errors,
+        });
+        return;
+    }
+
+    const newId = posts[posts.length - 1].id + 1;
+
+    const newPost = {
+        id: newId,
+        title: newPostData.title,
+        content: newPostData.content,
+        image: newPostData.image,
+        tags: newPostData.tags,
+        slug: newPostData.slug,
+        published: newPostData.published,
+        prep_time: newPostData.prep_time,
+        created_at: new Date().toISOString(),
+    };
+
+    posts.push(newPost);
+
+    console.log("Lista aggiornata dei post:", posts);
+
     res.status(201).json({
         message: "Stai provando a creare dei dati",
         dati: newPostData,
